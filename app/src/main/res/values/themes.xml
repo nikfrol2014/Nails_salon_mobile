@@ -1,0 +1,9 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Базовая тема AppCompat -->
+    <style name="Theme.NailSalonApp" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Primary brand color -->
+        <item name="colorPrimary">#FF6B9D</item>  <!-- Розовый для салона -->
+        <item name="colorPrimaryDark">#D8436E</item>
+        <item name="colorAccent">#4CAF50</item>
+    </style>
+</resources>

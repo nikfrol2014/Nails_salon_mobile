@@ -1,0 +1,67 @@
+plugins {
+    alias(libs.plugins.android.application)
+}
+
+android {
+    namespace 'com.example.nails_salon_mobile'
+    compileSdk 36
+
+    defaultConfig {
+        applicationId "com.example.nails_salon_mobile"
+        minSdk 24
+        targetSdk 36
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+}
+
+dependencies {
+    // Существующие
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    // СЕТЬ
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.11.0'
+
+    // ЛОКАЛЬНАЯ БД
+    implementation 'androidx.room:room-runtime:2.5.2'
+    annotationProcessor 'androidx.room:room-compiler:2.5.2'
+    implementation 'androidx.room:room-rxjava3:2.5.2' // опционально
+
+    // НАВИГАЦИЯ
+    implementation 'androidx.navigation:navigation-fragment:2.6.0'
+    implementation 'androidx.navigation:navigation-ui:2.6.0'
+
+    // ViewPager2 для перелистывания
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+
+    // Загрузка изображений
+    implementation 'com.github.bumptech.glide:glide:4.15.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.15.1'
+
+    // SharedPreferences
+    implementation 'androidx.preference:preference:1.2.0'
+
+    // Для EdgeToEdge (требуется Android Studio Flamingo+)
+    implementation 'androidx.core:core-splashscreen:1.0.1'
+    implementation 'androidx.core:core:1.12.0'
+
+    // Material 3 для современных фич
+    implementation 'com.google.android.material:material:1.10.0'
+}
