@@ -2,9 +2,14 @@ package com.example.nails_salon_mobile.ui.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
@@ -21,6 +26,8 @@ public class HomeFragment extends Fragment {
     private TextView tvWelcome;
     private ViewPager2 viewPager;
     private TabLayout tabLayout;
+
+    private Button btnMoreOptions;
 
     // Данные для ViewPager (промо-акции)
     private final List<String> promoTitles = Arrays.asList(
@@ -45,6 +52,7 @@ public class HomeFragment extends Fragment {
         initViews(view);
         setupViewPager();
         setupWelcomeMessage();
+        setupPopupMenu();
 
         return view;
     }
@@ -53,6 +61,7 @@ public class HomeFragment extends Fragment {
         tvWelcome = view.findViewById(R.id.tv_welcome);
         viewPager = view.findViewById(R.id.view_pager);
         tabLayout = view.findViewById(R.id.tab_layout);
+        btnMoreOptions = view.findViewById(R.id.btn_more_options);
     }
 
     private void setupViewPager() {
@@ -80,6 +89,31 @@ public class HomeFragment extends Fragment {
         });
 
         startAutoScroll();
+    }
+
+    private void setupPopupMenu() {
+        btnMoreOptions.setOnClickListener(v -> {
+            PopupMenu popupMenu = new PopupMenu(requireContext(), v);
+            MenuInflater inflater = popupMenu.getMenuInflater();
+            inflater.inflate(R.menu.popup_menu_home, popupMenu.getMenu());
+
+            popupMenu.setOnMenuItemClickListener(item -> {
+                int itemId = item.getItemId();
+                if (itemId == R.id.popup_contact) {
+                    Toast.makeText(getContext(), "Контакты", Toast.LENGTH_SHORT).show();
+                    return true;
+                } else if (itemId == R.id.popup_location) {
+                    Toast.makeText(getContext(), "Как добраться", Toast.LENGTH_SHORT).show();
+                    return true;
+                } else if (itemId == R.id.popup_schedule) {
+                    Toast.makeText(getContext(), "График работы", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                return false;
+            });
+
+            popupMenu.show();
+        });
     }
 
     private void startAutoScroll() {

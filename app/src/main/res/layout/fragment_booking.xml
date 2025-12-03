@@ -17,11 +17,33 @@
             android:textStyle="bold"
             android:layout_marginBottom="24dp" />
 
-        <!-- Выбор услуги -->
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone" />
+
+        <!-- 1. Выбор категории -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Выберите услугу:"
+            android:text="1. Выберите категорию:"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp" />
+
+        <Spinner
+            android:id="@+id/spinner_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 2. Выбор услуги -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2. Выберите услугу:"
             android:textSize="16sp"
             android:layout_marginBottom="8dp" />
 
@@ -29,13 +51,50 @@
             android:id="@+id/spinner_service"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:enabled="false" />
+
+        <!-- Базовая цена услуги -->
+        <TextView
+            android:id="@+id/tv_selected_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Выберите услугу"
+            android:textSize="14sp"
+            android:textColor="#666666"
             android:layout_marginBottom="16dp" />
 
-        <!-- Выбор даты -->
+        <!-- 3. Выбор мастера -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Дата:"
+            android:text="3. Выберите мастера:"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp" />
+
+        <Spinner
+            android:id="@+id/spinner_master"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:enabled="false" />
+
+        <!-- Цена мастера -->
+        <TextView
+            android:id="@+id/tv_master_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="14sp"
+            android:textColor="#4CAF50"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp" />
+
+        <!-- 4. Выбор даты -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4. Выберите дату:"
             android:textSize="16sp"
             android:layout_marginBottom="8dp" />
 
@@ -64,11 +123,11 @@
 
         </LinearLayout>
 
-        <!-- Выбор времени -->
+        <!-- 5. Выбор времени -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Время:"
+            android:text="5. Выберите время:"
             android:textSize="16sp"
             android:layout_marginBottom="8dp" />
 

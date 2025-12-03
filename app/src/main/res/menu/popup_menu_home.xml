@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/popup_contact"
+        android:title="Контакты" />
+
+    <item
+        android:id="@+id/popup_location"
+        android:title="Как добраться" />
+
+    <item
+        android:id="@+id/popup_schedule"
+        android:title="График работы" />
+
+    <item
+        android:id="@+id/popup_feedback"
+        android:title="Оставить отзыв" />
+
+</menu>

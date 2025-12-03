@@ -64,4 +64,14 @@ dependencies {
 
     // Material 3 для современных фич
     implementation 'com.google.android.material:material:1.10.0'
+
+    // Для работы с LiveData в Room
+    implementation 'androidx.lifecycle:lifecycle-livedata:2.6.2'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.6.2'
+
+    // ThreeTenABP для работы с java.time в Android
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.4.6'
+
+    // Для GSON сериализации дат
+    implementation 'com.fatboyindustrial.gson-javatime-serialisers:gson-javatime-serialisers:1.1.2'
 }

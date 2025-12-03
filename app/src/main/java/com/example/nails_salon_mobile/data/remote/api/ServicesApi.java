@@ -1,6 +1,8 @@
 package com.example.nails_salon_mobile.data.remote.api;
 
 import com.example.nails_salon_mobile.data.remote.models.NailServiceDto;
+import com.example.nails_salon_mobile.data.remote.models.ServiceCategory;
+
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -19,4 +21,8 @@ public interface ServicesApi {
 
     @GET("api/v1/services/search")
     Call<List<NailServiceDto>> searchServices(@Query("query") String query);
+
+    // Новый метод: получить категорию услуги
+    @GET("api/v1/services/{serviceId}/category")
+    Call<ServiceCategory> getServiceCategory(@Path("serviceId") Long serviceId);
 }

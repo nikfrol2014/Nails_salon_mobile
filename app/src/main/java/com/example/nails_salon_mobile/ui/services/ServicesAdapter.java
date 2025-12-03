@@ -13,9 +13,18 @@ import java.util.List;
 public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.ServiceViewHolder> {
 
     private List<NailServiceDto> services;
+    private OnServiceClickListener listener;
 
-    public ServicesAdapter(List<NailServiceDto> services) {
+    // Интерфейс для обработки кликов
+    public interface OnServiceClickListener {
+        void onServiceClick(NailServiceDto service);
+        void onServiceBook(NailServiceDto service);
+        void onServiceDetails(NailServiceDto service);
+    }
+
+    public ServicesAdapter(List<NailServiceDto> services, OnServiceClickListener listener) {
         this.services = services;
+        this.listener = listener;
     }
 
     @NonNull
@@ -30,6 +39,23 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Servic
     public void onBindViewHolder(@NonNull ServiceViewHolder holder, int position) {
         NailServiceDto service = services.get(position);
         holder.bind(service);
+
+        // Обычный клик
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onServiceClick(service);
+            }
+        });
+
+        // Долгое нажатие для контекстного меню
+        holder.itemView.setOnLongClickListener(v -> {
+            if (listener != null) {
+                // Можно показать контекстное меню или сразу детали
+                listener.onServiceDetails(service);
+                return true;
+            }
+            return false;
+        });
     }
 
     @Override
@@ -49,8 +75,21 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Servic
 
         public void bind(NailServiceDto service) {
             tvName.setText(service.getName());
-            tvPrice.setText(String.format("Цена: %.0f руб.", service.getPrice()));
-            tvDuration.setText(String.format("Длительность: %d мин", service.getDurationMinutes()));
+
+            // Цена
+            Double price = service.getPrice();
+            String priceText = (price != null && price > 0) ?
+                    String.format("Цена: %.0f руб.", price) : "Цена не указана";
+            tvPrice.setText(priceText);
+
+            // Длительность
+            Integer duration = service.getDurationMinutes();
+            String durationText = (duration != null && duration > 0) ?
+                    String.format("Длительность: %d мин", duration) : "Длительность не указана";
+            tvDuration.setText(durationText);
+
+            // Можно добавить TextView для категории, если нужно
+            // tvCategory.setText(service.getCategoryName());
         }
     }
 }

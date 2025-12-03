@@ -3,7 +3,8 @@ package com.example.nails_salon_mobile.data.remote.models;
 import com.google.gson.annotations.SerializedName;
 
 public class NailServiceDto {
-    @SerializedName("id")
+
+    @SerializedName("serviceId")  // Было: "id"
     private Long id;
 
     @SerializedName("name")
@@ -12,37 +13,43 @@ public class NailServiceDto {
     @SerializedName("description")
     private String description;
 
-    @SerializedName("price")
+    @SerializedName("basePrice")  // Было: "price"
     private Double price;
 
-    @SerializedName("durationMinutes")
+    @SerializedName("baseDuration")  // Было: "durationMinutes"
     private Integer durationMinutes;
 
     @SerializedName("categoryId")
     private Long categoryId;
 
-    @SerializedName("isActive")
+    @SerializedName("categoryName")
+    private String categoryName;
+
+    @SerializedName("active")  // Было: "isActive"
     private Boolean isActive;
 
-    // Геттеры и сеттеры
+    // Геттеры с защитой от null
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
-    public String getName() { return name; }
+    public String getName() { return name != null ? name : ""; }
     public void setName(String name) { this.name = name; }
 
-    public String getDescription() { return description; }
+    public String getDescription() { return description != null ? description : ""; }
     public void setDescription(String description) { this.description = description; }
 
-    public Double getPrice() { return price; }
+    public Double getPrice() { return price != null ? price : 0.0; }
     public void setPrice(Double price) { this.price = price; }
 
-    public Integer getDurationMinutes() { return durationMinutes; }
+    public Integer getDurationMinutes() { return durationMinutes != null ? durationMinutes : 0; }
     public void setDurationMinutes(Integer durationMinutes) { this.durationMinutes = durationMinutes; }
 
     public Long getCategoryId() { return categoryId; }
     public void setCategoryId(Long categoryId) { this.categoryId = categoryId; }
 
-    public Boolean getActive() { return isActive; }
+    public String getCategoryName() { return categoryName != null ? categoryName : ""; }
+    public void setCategoryName(String categoryName) { this.categoryName = categoryName; }
+
+    public Boolean getActive() { return isActive != null ? isActive : true; }
     public void setActive(Boolean active) { isActive = active; }
 }

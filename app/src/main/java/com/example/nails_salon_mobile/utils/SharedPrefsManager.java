@@ -2,6 +2,7 @@ package com.example.nails_salon_mobile.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 public class SharedPrefsManager {
     private static final String PREFS_NAME = "NailSalonPrefs";
@@ -65,7 +66,10 @@ public class SharedPrefsManager {
 
     // Геттеры
     public String getAccessToken() {
-        return prefs.getString(KEY_ACCESS_TOKEN, null);
+        String token = prefs.getString(KEY_ACCESS_TOKEN, null);
+        Log.d("SharedPrefsManager", "Токен из SharedPrefs: " +
+                (token != null ? token.substring(0, Math.min(20, token.length())) + "..." : "null"));
+        return token;
     }
 
     public String getRefreshToken() {
