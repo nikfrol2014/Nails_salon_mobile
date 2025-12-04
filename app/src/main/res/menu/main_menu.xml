@@ -2,6 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- Обновить профиль (НОВОЕ) -->
+    <item
+        android:id="@+id/action_refresh_profile"
+        android:icon="@android:drawable/ic_menu_rotate"
+        android:title="Обновить профиль"
+        app:showAsAction="ifRoom|withText" />
+
     <!-- Поиск -->
     <item
         android:id="@+id/action_search"

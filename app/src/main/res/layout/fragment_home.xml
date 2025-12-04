@@ -2,7 +2,8 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background_grey">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -10,91 +11,153 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/tv_welcome"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Добро пожаловать!"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="24dp" />
-
-        <!-- ViewPager2 для перелистывания акций -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Наши акции"
-            android:textSize="18sp"
-            android:layout_marginBottom="12dp" />
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/view_pager"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginBottom="8dp" />
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabIndicatorColor="@android:color/white"
-            app:tabSelectedTextColor="@android:color/white"
-            app:tabTextColor="@color/gray" />
-
-        <!-- Блок быстрых действий -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Быстрые действия"
-            android:textSize="18sp"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="12dp" />
-
+        <!-- Приветствие -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="16dp">
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@drawable/card_background"
+            android:layout_marginBottom="16dp"
+            android:elevation="2dp">
 
-            <Button
-                android:id="@+id/btn_quick_book"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Записаться"
-                android:layout_marginEnd="8dp" />
-
-            <Button
-                android:id="@+id/btn_my_appointments"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Мои записи" />
-
-            <Button
-                android:id="@+id/btn_more_options"
+            <TextView
+                android:id="@+id/tv_welcome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Еще"
-                android:layout_gravity="end"
-                android:layout_marginBottom="16dp" />
+                android:text="Добро пожаловать!"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nail Salon - профессиональный уход"
+                android:textSize="14sp"
+                android:textColor="@color/text_secondary"
+                android:layout_marginTop="4dp" />
 
         </LinearLayout>
 
-        <!-- Информация о салоне -->
-        <TextView
-            android:layout_width="wrap_content"
+        <!-- Акции -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="О нашем салоне"
-            android:textSize="18sp"
-            android:layout_marginBottom="8dp" />
+            android:orientation="vertical"
+            android:background="@drawable/card_background"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:elevation="2dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="✨ Наши акции"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:layout_marginBottom="12dp" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/view_pager"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginBottom="8dp" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabIndicatorColor="@color/primary_pink"
+                app:tabSelectedTextColor="@color/primary_pink"
+                app:tabTextColor="@color/text_secondary" />
+
+        </LinearLayout>
+
+        <!-- Быстрые действия -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Профессиональный уход за ногтями от лучших мастеров города. Мы используем только качественные материалы и современное оборудование."
-            android:textSize="14sp"
-            android:lineSpacingExtra="4dp" />
+            android:orientation="vertical"
+            android:background="@drawable/card_background"
+            android:padding="16dp"
+            android:layout_marginBottom="16dp"
+            android:elevation="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🚀 Быстрые действия"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:layout_marginBottom="12dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="8dp">
+
+                <Button
+                    android:id="@+id/btn_quick_book"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="📅 Записаться"
+                    android:layout_marginEnd="8dp"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:backgroundTint="@color/primary_pink" />
+
+                <Button
+                    android:id="@+id/btn_my_appointments"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="📋 Мои записи"
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:backgroundTint="@color/secondary_green" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_more_options"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="⚙️ Ещё опции"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:textColor="@color/primary_pink" />
+
+        </LinearLayout>
+
+        <!-- О салоне -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/card_background"
+            android:padding="16dp"
+            android:elevation="2dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="💅 О нашем салоне"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Профессиональный уход за ногтями от лучших мастеров города. Мы используем только качественные материалы и современное оборудование."
+                android:textSize="14sp"
+                android:textColor="@color/text_secondary"
+                android:lineSpacingExtra="4dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -3,18 +3,22 @@
 
     <item
         android:id="@+id/popup_contact"
+        android:icon="@android:drawable/ic_menu_call"
         android:title="Контакты" />
 
     <item
         android:id="@+id/popup_location"
+        android:icon="@android:drawable/ic_menu_mapmode"
         android:title="Как добраться" />
 
     <item
         android:id="@+id/popup_schedule"
+        android:icon="@android:drawable/ic_menu_agenda"
         android:title="График работы" />
 
     <item
         android:id="@+id/popup_feedback"
+        android:icon="@android:drawable/ic_menu_edit"
         android:title="Оставить отзыв" />
 
 </menu>

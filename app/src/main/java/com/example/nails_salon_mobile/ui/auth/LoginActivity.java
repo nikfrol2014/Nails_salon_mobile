@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.nails_salon_mobile.MainActivity;
@@ -13,6 +14,7 @@ import com.example.nails_salon_mobile.data.remote.RetrofitClient;
 import com.example.nails_salon_mobile.data.remote.api.AuthApi;
 import com.example.nails_salon_mobile.data.remote.models.JwtResponse;
 import com.example.nails_salon_mobile.data.remote.models.LoginRequest;
+import com.example.nails_salon_mobile.data.remote.models.UserResponseDto;
 import com.example.nails_salon_mobile.utils.SharedPrefsManager;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etEmail, etPassword;
     private Button btnLogin;
     private AuthApi authApi;
+    private TextView tvRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
+        tvRegister = findViewById(R.id.tvRegister);
     }
 
     private void setupRetrofit() {
@@ -58,6 +62,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 attemptLogin();
             }
+        });
+        tvRegister.setOnClickListener(v -> {
+            startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
         });
     }
 
@@ -87,18 +94,22 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     JwtResponse jwtResponse = response.body();
 
-                    // Используем метод с 4 параметрами (без email в методе)
+                    // Сохраняем базовые данные
                     SharedPrefsManager.getInstance(LoginActivity.this).saveAuthTokens(
                             jwtResponse.getAccessToken(),
                             jwtResponse.getRefreshToken(),
                             jwtResponse.getUserId(),
-                            jwtResponse.getRole()
+                            jwtResponse.getRole(),
+                            jwtResponse.getEmail()
                     );
 
                     // Дополнительно сохраняем email отдельно
                     SharedPrefsManager.getInstance(LoginActivity.this).updateUserEmail(
                             jwtResponse.getEmail()
                     );
+
+                    // ПОЛУЧАЕМ ПОЛНЫЕ ДАННЫЕ ПОЛЬЗОВАТЕЛЯ
+                    fetchUserProfile(jwtResponse.getAccessToken(), jwtResponse.getUserId());
 
                     Toast.makeText(LoginActivity.this, "Успешный вход!", Toast.LENGTH_SHORT).show();
                     startMainActivity();
@@ -122,6 +133,56 @@ public class LoginActivity extends AppCompatActivity {
                 Toast.makeText(LoginActivity.this, "Ошибка сети: " + t.getMessage(),
                         Toast.LENGTH_SHORT).show();
                 t.printStackTrace(); // Выведем стектрейс в Logcat
+            }
+        });
+    }
+
+    // Новый метод для получения профиля пользователя
+    private void fetchUserProfile(String accessToken, Long userId) {
+        Call<UserResponseDto> call = authApi.getCurrentUser("Bearer " + accessToken);
+
+        call.enqueue(new Callback<UserResponseDto>() {
+            @Override
+            public void onResponse(Call<UserResponseDto> call, Response<UserResponseDto> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    UserResponseDto user = response.body();
+
+                    SharedPrefsManager prefs = SharedPrefsManager.getInstance(LoginActivity.this);
+                    prefs.saveUserProfile(
+                            user.getFirstName(),
+                            user.getLastName(),
+                            user.getPhone()
+                    );
+
+                    prefs.saveUserData(
+                            accessToken,
+                            prefs.getRefreshToken(), // Берем из уже сохраненного
+                            userId,
+                            prefs.getUserRole(),
+                            user.getEmail(),
+                            user.getFirstName(),
+                            user.getLastName(),
+                            user.getPhone()
+                    );
+
+                    Toast.makeText(LoginActivity.this,
+                            "Добро пожаловать, " + user.getFirstName() + "!",
+                            Toast.LENGTH_SHORT).show();
+
+                    startMainActivity();
+
+                } else {
+                    // Если не удалось получить профиль, все равно переходим
+                    Toast.makeText(LoginActivity.this, "Успешный вход!", Toast.LENGTH_SHORT).show();
+                    startMainActivity();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserResponseDto> call, Throwable t) {
+                // При ошибке все равно переходим (данные загрузим позже)
+                Toast.makeText(LoginActivity.this, "Успешный вход!", Toast.LENGTH_SHORT).show();
+                startMainActivity();
             }
         });
     }

@@ -41,6 +41,7 @@ dependencies {
 
     // ЛОКАЛЬНАЯ БД
     implementation 'androidx.room:room-runtime:2.5.2'
+    implementation libs.swiperefreshlayout
     annotationProcessor 'androidx.room:room-compiler:2.5.2'
     implementation 'androidx.room:room-rxjava3:2.5.2' // опционально
 

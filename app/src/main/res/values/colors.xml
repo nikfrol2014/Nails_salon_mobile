@@ -5,10 +5,31 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="men">#E6000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#808080</color>
     <!-- Цвета для салона -->
     <color name="color_primary">#FF6B9D</color>
     <color name="color_primary_dark">#D8436E</color>
     <color name="color_accent">#4CAF50</color>
+
+    <!-- Основные цвета -->
+    <color name="primary_pink">#FF6B9D</color>
+    <color name="secondary_green">#4CAF50</color>
+
+    <!-- Фоны -->
+    <color name="background_grey">#F5F5F5</color>
+    <color name="card_background">#FFFFFF</color>
+
+    <!-- Текст -->
+    <color name="text_primary">#333333</color>
+    <color name="text_secondary">#666666</color>
+    <color name="text_hint">#999999</color>
+
+    <!-- Статусы -->
+    <color name="status_booked">#2196F3</color>
+    <color name="status_confirmed">#4CAF50</color>
+    <color name="status_completed">#9C27B0</color>
+    <color name="status_cancelled">#F44336</color>
+    <color name="status_pending">#FF9800</color>
 </resources>

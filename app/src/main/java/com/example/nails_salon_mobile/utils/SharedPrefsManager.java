@@ -12,6 +12,10 @@ public class SharedPrefsManager {
     private static final String KEY_USER_ROLE = "user_role";
     private static final String KEY_USER_EMAIL = "user_email";
     private static final String KEY_USER_NAME = "user_name";
+    private static final String KEY_USER_FIRST_NAME = "user_first_name"; // НОВОЕ
+    private static final String KEY_USER_LAST_NAME = "user_last_name";   // НОВОЕ
+    private static final String KEY_USER_PHONE = "user_phone";           // НОВОЕ
+
 
     private SharedPreferences prefs;
     private static SharedPrefsManager instance;
@@ -64,6 +68,69 @@ public class SharedPrefsManager {
         editor.apply();
     }
 
+    // Метод для сохранения полных данных пользователя
+    public void saveUserProfile(String firstName, String lastName, String phone) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(KEY_USER_FIRST_NAME, firstName != null ? firstName : "");
+        editor.putString(KEY_USER_LAST_NAME, lastName != null ? lastName : "");
+        editor.putString(KEY_USER_PHONE, phone != null ? phone : "");
+
+        // Обновляем полное имя
+        String fullName = (firstName != null ? firstName : "") + " " + (lastName != null ? lastName : "");
+        editor.putString(KEY_USER_NAME, fullName.trim());
+
+        editor.apply();
+    }
+
+    // Метод для сохранения всех данных пользователя
+    public void saveUserData(String accessToken, String refreshToken,
+                             Long userId, String role, String email,
+                             String firstName, String lastName, String phone) {
+        SharedPreferences.Editor editor = prefs.edit();
+
+        // Сохраняем базовые данные
+        editor.putString(KEY_ACCESS_TOKEN, accessToken);
+        editor.putString(KEY_REFRESH_TOKEN, refreshToken);
+        editor.putLong(KEY_USER_ID, userId);
+        editor.putString(KEY_USER_ROLE, role);
+        editor.putString(KEY_USER_EMAIL, email != null ? email : "");
+
+        // Сохраняем профиль пользователя
+        editor.putString(KEY_USER_FIRST_NAME, firstName != null ? firstName : "");
+        editor.putString(KEY_USER_LAST_NAME, lastName != null ? lastName : "");
+        editor.putString(KEY_USER_PHONE, phone != null ? phone : "");
+
+        // Формируем полное имя
+        String fullName = "";
+        if (firstName != null && !firstName.isEmpty()) {
+            fullName = firstName;
+            if (lastName != null && !lastName.isEmpty()) {
+                fullName += " " + lastName;
+            }
+        } else if (lastName != null && !lastName.isEmpty()) {
+            fullName = lastName;
+        }
+        editor.putString(KEY_USER_NAME, fullName);
+
+        editor.apply();
+
+        Log.d("SharedPrefsManager", "Сохранено имя: " + fullName +
+                ", email: " + email + ", firstName: " + firstName + ", lastName: " + lastName);
+    }
+
+    // Новые геттеры
+    public String getUserFirstName() {
+        return prefs.getString(KEY_USER_FIRST_NAME, "");
+    }
+
+    public String getUserLastName() {
+        return prefs.getString(KEY_USER_LAST_NAME, "");
+    }
+
+    public String getUserPhone() {
+        return prefs.getString(KEY_USER_PHONE, "");
+    }
+
     // Геттеры
     public String getAccessToken() {
         String token = prefs.getString(KEY_ACCESS_TOKEN, null);
@@ -89,7 +156,17 @@ public class SharedPrefsManager {
     }
 
     public String getUserName() {
-        return prefs.getString(KEY_USER_NAME, "");
+        String storedName = prefs.getString(KEY_USER_NAME, "");
+        if (storedName.isEmpty()) {
+            // Если нет полного имени, соберем из компонентов
+            String firstName = getUserFirstName();
+            String lastName = getUserLastName();
+            String fullName = (firstName + " " + lastName).trim();
+            if (!fullName.isEmpty()) {
+                return fullName;
+            }
+        }
+        return storedName;
     }
 
     // Обновление отдельных полей

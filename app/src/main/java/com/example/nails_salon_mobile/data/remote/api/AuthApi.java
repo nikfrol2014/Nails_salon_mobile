@@ -3,6 +3,7 @@ package com.example.nails_salon_mobile.data.remote.api;
 import com.example.nails_salon_mobile.data.remote.models.JwtResponse;
 import com.example.nails_salon_mobile.data.remote.models.LoginRequest;
 import com.example.nails_salon_mobile.data.remote.models.RefreshTokenRequest;
+import com.example.nails_salon_mobile.data.remote.models.RegisterRequest;
 import com.example.nails_salon_mobile.data.remote.models.UserResponseDto;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -20,4 +21,8 @@ public interface AuthApi {
 
     @GET("api/v1/users/me")
     Call<UserResponseDto> getCurrentUser(@Header("Authorization") String token);
+
+    // РЕГИСТРАЦИЯ (НОВОЕ)
+    @POST("api/v1/auth/register")
+    Call<UserResponseDto> register(@Body RegisterRequest registerRequest);
 }

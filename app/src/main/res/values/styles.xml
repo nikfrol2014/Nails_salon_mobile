@@ -1,0 +1,53 @@
+<resources>
+    <!-- Стиль для заголовков -->
+    <style name="TitleStyle" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.02</item>
+    </style>
+
+    <style name="SubtitleStyle" parent="TextAppearance.AppCompat.Subhead">
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.01</item>
+    </style>
+
+    <style name="CardTitleStyle" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@color/color_primary</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:drawablePadding">8dp</item>
+    </style>
+
+    <!-- Стиль для BottomNavigationView -->
+    <style name="BottomNavigationStyle" parent="Widget.Design.BottomNavigationView">
+        <item name="android:background">@android:color/white</item>
+        <item name="itemIconTint">@drawable/bottom_nav_style</item>
+        <item name="itemTextColor">@drawable/bottom_nav_style</item>
+        <item name="itemTextAppearanceActive">@style/BottomNavTextActive</item>
+        <item name="itemTextAppearanceInactive">@style/BottomNavTextInactive</item>
+        <item name="elevation">8dp</item>
+        <item name="labelVisibilityMode">labeled</item>
+    </style>
+
+    <!-- Активный текст -->
+    <style name="BottomNavTextActive">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Неактивный текст -->
+    <style name="BottomNavTextInactive">
+        <item name="android:textSize">11sp</item>
+    </style>
+
+    <!-- Стиль для Toolbar -->
+    <style name="ToolbarStyle" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">@android:color/white</item>
+        <item name="titleTextColor">@color/text_primary</item>
+        <item name="navigationIcon">@android:drawable/ic_menu_preferences</item>
+
+    </style>
+
+</resources>

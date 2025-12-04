@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Фон -->
+    <item>
+        <shape>
+            <solid android:color="@android:color/white" />
+        </shape>
+    </item>
+
+    <!-- Нижняя граница -->
+    <item android:top="?attr/actionBarSize" android:gravity="bottom">
+        <shape>
+            <solid android:color="#E0E0E0" />
+            <size android:height="1dp" />
+        </shape>
+    </item>
+
+</layer-list>

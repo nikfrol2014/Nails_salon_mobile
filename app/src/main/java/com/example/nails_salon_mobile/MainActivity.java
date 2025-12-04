@@ -1,8 +1,12 @@
 package com.example.nails_salon_mobile;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,12 +14,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
 import com.example.nails_salon_mobile.data.remote.RetrofitClient;
+import com.example.nails_salon_mobile.data.remote.models.UserResponseDto;
 import com.example.nails_salon_mobile.ui.home.HomeFragment;
 import com.example.nails_salon_mobile.ui.services.ServicesFragment;
 import com.example.nails_salon_mobile.ui.booking.BookingFragment;
 import com.example.nails_salon_mobile.ui.profile.ProfileFragment;
+import com.example.nails_salon_mobile.utils.SharedPrefsManager;
+import com.example.nails_salon_mobile.utils.UserProfileManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             loadFragment(new HomeFragment());
         }
+
+        // ОБНОВЛЯЕМ ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ ПРИ ЗАПУСКЕ
+        refreshUserProfileOnStart();
     }
 
     private void initViews() {
@@ -48,19 +57,25 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupToolbar() {
         setSupportActionBar(toolbar);
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(true);
         }
     }
 
-    // Создание меню
+    private void refreshUserProfileOnStart() {
+        if (SharedPrefsManager.getInstance(this).isLoggedIn()) {
+            // Фоновое обновление профиля
+            UserProfileManager.getInstance(this).refreshProfileIfNeeded();
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
-    // Обработка кликов по меню
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
@@ -72,14 +87,60 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Настройки", Toast.LENGTH_SHORT).show();
             return true;
         } else if (itemId == R.id.action_help) {
-            Toast.makeText(this, "Помощь", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Бог в помощь", Toast.LENGTH_SHORT).show();
             return true;
         } else if (itemId == R.id.action_about) {
             Toast.makeText(this, "О приложении v1.0", Toast.LENGTH_SHORT).show();
             return true;
+        } else if (itemId == R.id.action_refresh_profile) { // ДОБАВИМ ЭТОТ ПУНКТ
+            refreshUserProfile();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    // Метод для ручного обновления профиля
+    private void refreshUserProfile() {
+        if (!SharedPrefsManager.getInstance(this).isLoggedIn()) {
+            Toast.makeText(this, "Вы не авторизованы", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Toast.makeText(this, "Обновление профиля...", Toast.LENGTH_SHORT).show();
+
+        UserProfileManager.getInstance(this).refreshUserProfile(
+                new UserProfileManager.ProfileRefreshCallback() {
+                    @Override
+                    public void onSuccess(UserResponseDto user) {
+                        Toast.makeText(MainActivity.this,
+                                "Профиль обновлен: " + user.getFirstName(),
+                                Toast.LENGTH_SHORT).show();
+
+                        // Обновляем текущий фрагмент, если это нужно
+                        refreshCurrentFragment();
+                    }
+
+                    @Override
+                    public void onFailure(String error) {
+                        Toast.makeText(MainActivity.this,
+                                "Не удалось обновить профиль: " + error,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+    }
+
+    // Обновить текущий фрагмент (если это HomeFragment или ProfileFragment)
+    private void refreshCurrentFragment() {
+        Fragment currentFragment = getSupportFragmentManager()
+                .findFragmentById(R.id.fragment_container);
+
+        if (currentFragment instanceof HomeFragment) {
+            ((HomeFragment) currentFragment).refreshWelcomeMessage();
+        } else if (currentFragment instanceof ProfileFragment) {
+            ((ProfileFragment) currentFragment).refreshUserData();
+        }
     }
 
     private void setupBottomNavigation() {
